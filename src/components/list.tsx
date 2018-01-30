@@ -1,10 +1,12 @@
 import * as React from 'react';
+import { observer } from 'mobx-react';
 
 interface Props {
     items: any;
     handleClick: any;
 }
 
+@observer
 export default class List extends React.Component<Props, {}> {
     constructor(props: any) {
         super(props);

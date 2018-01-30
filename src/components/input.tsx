@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { observer } from 'mobx-react';
 
 interface Props {
     handleClick: any;
@@ -6,6 +7,8 @@ interface Props {
 interface State {
     item: string;
 }
+
+@observer
 export default class Input extends React.Component<Props, State> {
     constructor(props: any) {
         super(props);
