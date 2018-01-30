@@ -1,22 +1,65 @@
 import * as React from 'react';
-import './App.css';
 
-const logo = require('./logo.svg');
+import { observer } from 'mobx-react';
 
-class App extends React.Component {
+import List from './list';
+import Input from './input';
+
+interface State {
+  todoArray: any;
+  doneArray: any;
+  showAll: boolean;
+  showDone: boolean;
+  showTodo: boolean;
+}
+
+@observer
+export default class App extends React.Component<{}, State> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      todoArray: [],
+      doneArray: [],
+      showAll: true,
+      showDone: true,
+      showTodo: true,
+    };
+  }
+
+  handleSubmitClick = (item: any): void => {
+    console.log(item);
+    const doArray = this.state.todoArray;
+    doArray.push(item);
+    console.log(doArray);
+    this.setState({ todoArray: doArray });
+  }
+
+  handleDoneClick = (item: any): void => {
+    const done = this.state.doneArray;
+    const todo = this.state.todoArray;
+    done.push(item);
+    const newTodo = todo.filter((e: any) => e !== item);
+    this.setState({ doneArray: done, todoArray: newTodo });
+  }
+
+  handleDeleteClick = (item: any): void => {
+    const done = this.state.doneArray;
+    const newDone = done.filter((e: any) => e !== item);
+    this.setState({ doneArray: newDone });
+  }
+
   render() {
+    const { todoArray, doneArray } = this.state;
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
+        <div className="input-wrapper">
+          <Input handleClick={this.handleSubmitClick}/>
+        </div>
+        <h2>To Do</h2>
+        <List items={todoArray} handleClick={this.handleDoneClick} />
+        <h2>Done</h2>
+        <List items={doneArray} handleClick={this.handleDeleteClick} />
       </div>
     );
   }
 }
-
-export default App;

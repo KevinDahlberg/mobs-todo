@@ -1,5 +1,8 @@
 {
     "extends": ["tslint-react"],
+    "compilerOptions": {
+        "experimentalDecorators": true
+    },
     "rules": {
         "align": [
             true,
@@ -29,11 +32,10 @@
             "static-before-instance",
             "variables-before-functions"
         ],
-        "no-any": true,
         "no-arg": true,
         "no-bitwise": true,
         "no-console": [
-            true,
+            false,
             "log",
             "error",
             "debug",
